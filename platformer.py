@@ -66,10 +66,10 @@ class Jumper:
         if int(self.x) in range(checkpoints[self.current_checkpoint][0]-50 , checkpoints[self.current_checkpoint][0] + 50):
             if int(self.y) in range(checkpoints[self.current_checkpoint][1]-100 , checkpoints[self.current_checkpoint][1]):
                 self.current_checkpoint +=1
-                self.score += 300
+                self.score += 1000
         if self.current_checkpoint > 0:
             if int(self.y) > checkpoints[self.current_checkpoint - 1][1] + 75:
-                self.score -= 200
+                self.score -= 1000
                 self.current_checkpoint -=1
         
 """
@@ -97,7 +97,7 @@ class  Enviroment:
         self.jumpers = []
 
     def addJumper(self):
-        x = 50
+        x = 600
         y = 650
         size = 5
         jumper = Jumper(x, y, size)
@@ -120,9 +120,11 @@ class  Enviroment:
 
         if self.track[int(jumper.y), int(jumper.x + jumper.size)] == 0:
             jumper.x -= jumper.size
+            jumper.score -= 25
         
         if self.track[int(jumper.y), int(jumper.x - jumper.size)] == 0:
             jumper.x += jumper.size
+            jumper.score -= 25
 
         if self.track[int(jumper.y + jumper.size), int(jumper.x)] == 0:
             jumper.speed = 0
@@ -206,7 +208,7 @@ class  Enviroment:
     
     def env_reset(self):
         for i , jumper in enumerate(self.jumpers):
-            jumper.x = 50
+            jumper.x = 600
             jumper.y = 650
             jumper.speed = 0
             jumper.score = 0
@@ -221,7 +223,7 @@ class  Enviroment:
 #pygame.init()
 env = Enviroment((1200, 675), image = level, colliding = False )       
 screen = pygame.display.set_mode((env.width, env.height))
-for i in range(100):
+for i in range(300):
     env.addJumper()
 
 pygame.display.set_caption('My Second Game')
