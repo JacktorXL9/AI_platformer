@@ -41,8 +41,8 @@ class Jumper:
         self.gravity = 0.06
 
         self.distance_up = 0
-        self.distance_left = 0
-        self.distance_right = 0
+        self.distance_up_left = 0
+        self.distance_up_right = 0
         self.distance_down = 0
 
         self.fov = math.pi/2
@@ -187,14 +187,14 @@ class  Enviroment:
         jumper.distance_up = math.hypot(test_x - jumper.x, test_y - jumper.y)
 
         test_x, test_y = wheres_the_wall(self, jumper, up - angle)
-        jumper.distance_right = math.hypot(test_x - jumper.x, test_y - jumper.y)
+        jumper.distance_up_right = math.hypot(test_x - jumper.x, test_y - jumper.y)
 
         test_x, test_y = wheres_the_wall(self, jumper, up + angle)
-        jumper.distance_left = math.hypot(test_x - jumper.x, test_y - jumper.y)
+        jumper.distance_up_left = math.hypot(test_x - jumper.x, test_y - jumper.y)
 
     def brain(self, jumper):
-        inputs = np.array([jumper.distance_up, jumper.distance_right,
-        jumper.distance_left, jumper.distance_down])
+        inputs = np.array([jumper.distance_up, jumper.distance_up_right,
+        jumper.distance_up_left, jumper.distance_down])
         
         outputs = jumper.mind @ inputs
         if outputs[0] > 200 and jumper.speed == 0:
